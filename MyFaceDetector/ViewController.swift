@@ -35,9 +35,7 @@ class ViewController: UIViewController {
         let accuracy = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
         let faceDetector = CIDetector(ofType: CIDetectorTypeFace, context: nil, options: accuracy)
         let faces = faceDetector?.features(in: personciImage)
-       
-        
-        
+
         let ciImageSize = personciImage.extent.size
         var transform = CGAffineTransform(scaleX: 1, y: -1)
         transform = transform.translatedBy(x: 0, y: -ciImageSize.height)
@@ -57,10 +55,41 @@ class ViewController: UIViewController {
             
             if face.hasMouthPosition {
                 print("Mouth bounds are \(face.mouthPosition)")
+                let mouth = CALayer()
+                let image = UIImage(named: "happyMouthNose")
+                mouth.contents = image?.cgImage
+                mouth.contentsGravity = kCAGravityCenter
+                print("Mouth height", image?.size.height)
+                
+                var mouthPosition = face.mouthPosition
+                mouthPosition.x = mouthPosition.x * scale
+                
+                mouthPosition.y = ((self.imageView.image?.size.height)! - mouthPosition.y) * scale + (image?.size.height)! / 2
+                
+                
+                mouth.position = mouthPosition
+                imageView.layer.addSublayer(mouth)
+                print("mouthPosition: ", mouthPosition)
+
             }
             
             if face.hasLeftEyePosition {
                 print("Left eye bounds are \(face.leftEyePosition)")
+                let leftEye = CALayer()
+                let image = UIImage(named: "leftEye")
+                leftEye.contents = image?.cgImage
+                leftEye.contentsGravity = kCAGravityCenter
+                print("Left Eye height", image?.size.height)
+                
+                var leftEyePosition = face.leftEyePosition
+                leftEyePosition.x = leftEyePosition.x * scale
+                
+                leftEyePosition.y = ((self.imageView.image?.size.height)! - leftEyePosition.y) * scale + (image?.size.height)!
+                
+                
+                leftEye.position = leftEyePosition
+                imageView.layer.addSublayer(leftEye)
+                print("leftEyePosition: ", leftEyePosition)
             }
             
             if face.hasRightEyePosition {

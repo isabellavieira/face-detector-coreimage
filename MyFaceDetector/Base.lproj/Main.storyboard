@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="VFn-PS-H2g">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,6 +9,115 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--View Controller-->
+        <scene sceneID="rpb-xE-VP2">
+            <objects>
+                <viewController id="VFn-PS-H2g" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="B1q-tp-xeZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="k0R-c0-68X"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bll-ok-NmV">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="24D-mB-5S1">
+                                <rect key="frame" x="133" y="150" width="54" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Camera"/>
+                                <connections>
+                                    <segue destination="1kh-3y-jrL" kind="show" id="ZVI-Oo-YRv"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VCd-aC-ZGx">
+                                <rect key="frame" x="139" y="281" width="42" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Image"/>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" id="kYr-b5-fuT"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="O8d-Co-Wq9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1194" y="61"/>
+        </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="MJI-x5-a0O">
+            <objects>
+                <viewController id="1kh-3y-jrL" customClass="CameraViewController" customModule="MyFaceDetector" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="XRG-d0-p1W"/>
+                        <viewControllerLayoutGuide type="bottom" id="vsX-bT-Yj8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uSx-uy-1s0">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Juy-QU-rar">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SpR-st-rGZ">
+                                        <rect key="frame" x="122" y="460" width="77" height="30"/>
+                                        <state key="normal" title="Take Photo"/>
+                                        <connections>
+                                            <action selector="takePhoto:" destination="1kh-3y-jrL" eventType="touchUpInside" id="uP8-bH-6Qn"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="SpR-st-rGZ" firstAttribute="centerX" secondItem="Juy-QU-rar" secondAttribute="centerX" id="1lK-es-9DH"/>
+                                    <constraint firstAttribute="bottom" secondItem="SpR-st-rGZ" secondAttribute="bottom" constant="78" id="yKp-HX-HRk"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Juy-QU-rar" firstAttribute="leading" secondItem="uSx-uy-1s0" secondAttribute="leading" id="IU8-6v-fGc"/>
+                            <constraint firstItem="Juy-QU-rar" firstAttribute="bottom" secondItem="vsX-bT-Yj8" secondAttribute="top" id="ZoO-Tl-Wb1"/>
+                            <constraint firstAttribute="trailing" secondItem="Juy-QU-rar" secondAttribute="trailing" id="jyM-41-U3z"/>
+                            <constraint firstItem="Juy-QU-rar" firstAttribute="top" secondItem="uSx-uy-1s0" secondAttribute="top" id="yxc-q8-bbU"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="cameraViewUI" destination="Juy-QU-rar" id="AfZ-M6-9lG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hRI-1F-g0Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-195" y="-196.47887323943661"/>
+        </scene>
+        <!--Image Preview Controller-->
+        <scene sceneID="fPr-pX-c9a">
+            <objects>
+                <viewController storyboardIdentifier="ImagePreviewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="H0f-Fj-HeI" customClass="ImagePreviewController" customModule="MyFaceDetector" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9ir-Tq-SVW"/>
+                        <viewControllerLayoutGuide type="bottom" id="dAj-FD-Fvq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="VAK-rH-jXT">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dls-Mq-mjf" customClass="Image">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="capturedImageView" destination="dls-Mq-mjf" id="eLL-5B-9SR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jCM-bV-GTp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="615" y="-199.64788732394368"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -41,7 +150,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-80.625" y="138.38028169014083"/>
+            <point key="canvasLocation" x="-71" y="547"/>
         </scene>
     </scenes>
 </document>
