@@ -60,19 +60,20 @@ class CameraViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-//        print("View size = ", cameraViewUI.frame.size)
-//        print("Self View Frame Size = ", view.frame.size)
-
+        //        print("View size = ", cameraViewUI.frame.size)
+        //        print("Self View Frame Size = ", view.frame.size)
+        
         
     }
-
+    
     func displayCapturedPhoto(capturePhoto: UIImage) {
         
         let imagePreviewViewController = storyboard?.instantiateViewController(withIdentifier: "ImagePreviewController") as! ImagePreviewController
         imagePreviewViewController.capturedImage = capturePhoto
+        print (">>>>>> Captured foto: ", capturePhoto)
         present(imagePreviewViewController, animated: true, completion: nil)
     }
- 
+    
     func initializeCaptureSession() {
         
         // Configure Session
@@ -80,7 +81,7 @@ class CameraViewController: UIViewController {
         if (session == nil) {
             
             session = AVCaptureSession()
-            session?.sessionPreset = AVCaptureSessionPresetHigh
+            session?.sessionPreset = AVCaptureSessionPresetPhoto
         }
         
         
@@ -110,20 +111,20 @@ class CameraViewController: UIViewController {
             
             
             cameraCaptureOutput = AVCapturePhotoOutput()
-
+            
             if session!.canAddOutput(cameraCaptureOutput) {
                 session?.addOutput(cameraCaptureOutput)
                 
                 cameraPreviewLayer = AVCaptureVideoPreviewLayer(session: session)
                 cameraPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
                 cameraPreviewLayer?.frame.size.height = view.frame.size.height
-                cameraPreviewLayer?.frame.size.width = view.frame.size.width 
+                cameraPreviewLayer?.frame.size.width = view.frame.size.width
                 
                 
                 //cameraPreviewLayer?.frame = cameraViewUI.bounds
-//                print("View size = ", cameraViewUI.frame.size)
-//                print("Camera Preview Layer size = ", cameraPreviewLayer?.frame.size)
-//                print("Screen Size = ", view.frame.size)
+                //                print("View size = ", cameraViewUI.frame.size)
+                //                print("Camera Preview Layer size = ", cameraPreviewLayer?.frame.size)
+                //                print("Screen Size = ", view.frame.size)
                 
                 cameraPreviewLayer?.connection.videoOrientation = AVCaptureVideoOrientation.portrait
                 
@@ -165,34 +166,41 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
             
         } else {
             
-            if let sampleBuffer = photoSampleBuffer, let dataImage = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: sampleBuffer, previewPhotoSampleBuffer: nil) {
-                
-                if let finalImage = UIImage(data: dataImage) {
-                    
-                    displayCapturedPhoto(capturePhoto: finalImage)
-                    //characterLayer.opacity = 1
-                    //session?.stopRunning()
-                    
-                    //detect(image: finalImage)
-                    
-                    // print (">>> vou chamar google vision api")
-                    // CHAMA GOOGLE VISION API - Base64 encode the image and create the request
-                    /*
-                     let faceDetection = FaceDetection()
-                     print ("instantiated face detection class")
-                     let binaryImageData = faceDetection.base64EncodeImage(pedroImage!)
-                     print("created binary image data")
-                     let json = faceDetection.createRequest(with: binaryImageData)
-                     print ("face detection request", json)
-                     */
-                    
-                }
-            }
+            let sampleBuffer = photoSampleBuffer
+            let dataImage = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: sampleBuffer!, previewPhotoSampleBuffer: nil)
+            
+            let dataProvider = CGDataProvider(data: dataImage! as CFData)
+            let cgImageRef = CGImage(jpegDataProviderSource: dataProvider!,
+                                     decode: nil,
+                                     shouldInterpolate: true,
+                                     intent: CGColorRenderingIntent.defaultIntent)
+            
+            print (">>>>>>> DATA IMAGE: ", dataImage ?? print ("erro"))
+            
+            // if let finalImage = UIImage(data: dataImage) {
+            let finalImage = UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.right)
+            
+            displayCapturedPhoto(capturePhoto: finalImage)
+            //characterLayer.opacity = 1
+            //session?.stopRunning()
+            
+            //detect(image: finalImage)
+            
+            // print (">>> vou chamar google vision api")
+            // CHAMA GOOGLE VISION API - Base64 encode the image and create the request
+            /*
+             let faceDetection = FaceDetection()
+             print ("instantiated face detection class")
+             let binaryImageData = faceDetection.base64EncodeImage(pedroImage!)
+             print("created binary image data")
+             let json = faceDetection.createRequest(with: binaryImageData)
+             print ("face detection request", json)
+             */
         }
         
     }
     
-
+    
     
     func detect(image: UIImage) {
         //characterLayer.removeFromSuperlayer()
@@ -209,7 +217,7 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
         transform = transform.translatedBy(x: 0, y: -ciImageSize.height)
         if let face = faces?.first as? CIFaceFeature {
             print("found bounds are \(face.bounds)")
-
+            
             session?.stopRunning()
             /*
              
